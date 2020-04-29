@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface TopicRepository extends JpaRepository<Topic,Integer> {
 
-    String withoutName = "Без темы";
+    static String withoutName = "Без темы";
 
     @Modifying
     @Query("UPDATE Topic topic SET topic.name = :new_name WHERE topic.id = :topic_id")

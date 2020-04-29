@@ -1,7 +1,9 @@
 package bot;
 
 import bot.configs.VkConfig;
+import bot.entities.User;
 import bot.entities.VkCallbackRequest;
+import bot.repositories.UserRepository;
 import bot.services.MainMessageHandlerService;
 import bot.storages.LastActionStorage;
 import bot.storages.LastIncomingAttachmentStorage;
@@ -9,6 +11,7 @@ import bot.storages.TopicStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,9 +28,13 @@ public class CallbackHandlerController {
     @Autowired
     TopicStorage topicStorage;
 
+    @Autowired
+    UserRepository userRepository;
+
     @GetMapping
-    public Map get(){
-        return Map.of("actions", actions.storage, "attachments", attach.storage, "topics", topicStorage.storage);
+    public List<User> get(){
+        return userRepository.findAll();
+       // return Map.of("actions", actions.storage, "attachments", attach.storage, "topics", topicStorage.storage);
     }
 
     @Autowired

@@ -1,9 +1,7 @@
 package bot;
 
 import bot.configs.VkConfig;
-import bot.entities.User;
 import bot.entities.VkCallbackRequest;
-import bot.repositories.UserRepository;
 import bot.services.MainMessageHandlerService;
 import bot.storages.LastActionStorage;
 import bot.storages.LastIncomingAttachmentStorage;
@@ -11,7 +9,6 @@ import bot.storages.TopicStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,13 +25,9 @@ public class CallbackHandlerController {
     @Autowired
     TopicStorage topicStorage;
 
-    @Autowired
-    UserRepository userRepository;
-
     @GetMapping
-    public List<User> get(){
-        return userRepository.findAll();
-       // return Map.of("actions", actions.storage, "attachments", attach.storage, "topics", topicStorage.storage);
+    public Map get(){
+        return Map.of("actions", actions.storage, "attachments", attach.storage, "topics", topicStorage.storage);
     }
 
     @Autowired
@@ -44,7 +37,7 @@ public class CallbackHandlerController {
     private MainMessageHandlerService mainMessageHandlerService;
 
     @PostMapping
-    public VkCallbackRequest execute(@RequestBody VkCallbackRequest callback) throws Exception {
+    public String execute(@RequestBody VkCallbackRequest callback) throws Exception {
 
         if(!vkConfig.getSecret().equals(callback.getSecret()))
             throw new Exception("secret phrase is not correct");
@@ -55,7 +48,7 @@ public class CallbackHandlerController {
         if(callback.getType().equals("message_new"))
             mainMessageHandlerService.handle(callback.getObject());
 
-       return callback;
+       return "189ea0f5";
     }
 
 }

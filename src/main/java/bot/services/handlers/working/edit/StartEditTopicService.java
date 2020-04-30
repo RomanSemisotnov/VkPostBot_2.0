@@ -7,15 +7,12 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 @Processing(Action.START_EDIT_TOPIC)
 public class StartEditTopicService extends BaseHandler {
 
 
-
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         Integer topicId = (Integer) body.getPayload().get("topic_id");
 

@@ -9,6 +9,9 @@ import bot.repositories.UserRepository;
 import bot.storages.LastActionStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
 
 @Service
 public class MainMessageHandlerService {
@@ -26,15 +29,17 @@ public class MainMessageHandlerService {
     @Autowired
     private LastActionStorage lastActionStorage;
 
-
+    @Transactional
     public void handle(MessageBody message){
         User user = userRepository.findOrCreate(message.getUserVkId());
 
+        if(user.getLastMessageSec() != null && message.getSecondAfterUnixAge() <= user.getLastMessageSec())
+            return;
+
+        userRepository.updateLastDateById(user.getId(), Instant.now().getEpochSecond());
+
         Action prevAction = lastActionStorage.get(user.getId());
-
-        Action neededAction = defineActionService.define(message, prevAction);
-
-        BaseHandler handler = actionHandlersStorage.getHandler(neededAction);
+        BaseHandler handler = actionHandlersStorage.getHandler(defineActionService.define(message, prevAction));
 
         boolean isSuccess = handler.handle(message, user);
 

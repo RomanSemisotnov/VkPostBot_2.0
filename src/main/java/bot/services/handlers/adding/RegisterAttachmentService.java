@@ -7,13 +7,11 @@ import bot.entities.MessageBody;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 @Processing(Action.ADD_ATTACHMENT)
 public class RegisterAttachmentService extends BaseHandler {
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Обработка добавления attachment");
         Attachment newAttachment = body.getAttachments();

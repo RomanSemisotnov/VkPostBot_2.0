@@ -6,7 +6,6 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 @Processing(Action.SET_READ_ATTACHMENT)
 public class SetReadAttachmentService extends BaseHandler {
@@ -15,7 +14,6 @@ public class SetReadAttachmentService extends BaseHandler {
 
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Обновляем поле прочитанно у вложения");
 

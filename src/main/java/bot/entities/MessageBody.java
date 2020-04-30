@@ -20,5 +20,6 @@ public class MessageBody {
     private String text;
     private Map<String, Object> payload;
     private Attachment attachments;
+    private Long secondAfterUnixAge;
 
 }

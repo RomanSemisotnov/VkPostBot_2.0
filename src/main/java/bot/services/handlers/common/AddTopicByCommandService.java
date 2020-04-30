@@ -10,7 +10,6 @@ import bot.repositories.TopicRepository;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +20,6 @@ public class AddTopicByCommandService extends BaseHandler {
     private Pattern moreOneSpacePattern;
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Добавление топика по команде");
 

@@ -7,7 +7,6 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class ShowAttachmentsService extends BaseHandler {
 
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Показываем все непрочитанные топики");
         Integer neededTopic = (Integer) body.getPayload().get("topic_id");

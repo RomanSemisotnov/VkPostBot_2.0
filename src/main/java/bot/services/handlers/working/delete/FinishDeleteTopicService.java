@@ -10,7 +10,6 @@ import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +22,6 @@ public class FinishDeleteTopicService extends BaseHandler {
     SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Удаляем топик кокнчательно");
 

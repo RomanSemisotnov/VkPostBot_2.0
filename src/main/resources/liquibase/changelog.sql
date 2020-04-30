@@ -2,7 +2,8 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id    serial PRIMARY KEY,
-    vk_id integer UNIQUE NOT NULL
+    vk_id integer UNIQUE NOT NULL,
+    last_message bigint
 );
 
 CREATE TABLE IF NOT EXISTS topics

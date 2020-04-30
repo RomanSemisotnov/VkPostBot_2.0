@@ -5,9 +5,9 @@ import bot.entities.Attachment;
 import bot.entities.MessageBody;
 import bot.entities.User;
 import bot.enums.Action;
+import bot.repositories.TopicRepository;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 @Processing(Action.SET_ATTACHMENT_TOPIC_BY_KEYBOARD)
 public class SetAttachmenTopicByKeyboardService extends BaseHandler {
@@ -15,20 +15,28 @@ public class SetAttachmenTopicByKeyboardService extends BaseHandler {
 
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Ставим топик для аттачмента");
 
+        Attachment attachment = lastIncomingAttachmentStorage.get(user.getId());
         Integer topicId = (Integer) body.getPayload().get("topic_id");
-        Attachment attachment = lastIncomingAttachmentStorage.remove(user.getId());
+
+        String message;
+        if(topicId == null){
+            topicId = topicRepository.getWithoutName(user.getId()).getId();
+            message = "Вложение сохраненно в раздел '" + TopicRepository.withoutName + "'";
+        }else{
+            message = "Успешно сохраненно.";
+        }
 
         attachmentRepository.updateAttachmentTopic(attachment.getId(), topicId);
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage("Успешно сохраненно.")
+                .textMessage(message)
                 .build()
         );
+        lastIncomingAttachmentStorage.remove(user.getId());
         return true;
     }
 

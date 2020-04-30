@@ -24,4 +24,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics;
 
+    @Column(name = "last_message")
+    private Long lastMessageSec;
+
 }

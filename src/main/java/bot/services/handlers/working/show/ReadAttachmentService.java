@@ -18,7 +18,6 @@ public class ReadAttachmentService extends BaseHandler {
 
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Читаем вложение");
 

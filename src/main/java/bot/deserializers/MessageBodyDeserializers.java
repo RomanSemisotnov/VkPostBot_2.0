@@ -27,6 +27,7 @@ public class MessageBodyDeserializers extends JsonDeserializer<MessageBody> {
 
         int vkId = node.get("from_id").asInt();
         String text = node.get("text").asText();
+        Long secondAfterUnixAge = node.get("date").asLong();
         String jsonPayload = node.get("payload") != null ? node.get("payload").asText() : "{}";
         Map<String, Object> payload = mapper.readValue(jsonPayload, new TypeReference<HashMap<String, Object>>() {});
         Attachment attachment = mapper.readValue(node.get("attachments").toString(), Attachment.class);
@@ -35,6 +36,7 @@ public class MessageBodyDeserializers extends JsonDeserializer<MessageBody> {
                 .userVkId(vkId)
                 .text(text)
                 .attachments(attachment)
+                .secondAfterUnixAge(secondAfterUnixAge)
                 .payload(payload)
                 .build();
     }

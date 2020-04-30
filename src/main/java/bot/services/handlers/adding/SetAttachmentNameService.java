@@ -6,7 +6,6 @@ import bot.enums.Action;
 import bot.repositories.TopicRepository;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import java.util.List;
 public class SetAttachmentNameService extends BaseHandler {
 
     @Override
-    @Transactional
     public boolean handle(MessageBody body, User user) {
         System.out.println("Назначает вложения имя");
 

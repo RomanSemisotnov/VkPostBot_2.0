@@ -31,17 +31,28 @@ public class MainMessageHandlerService {
 
     @Transactional
     public void handle(MessageBody message){
-        User user = userRepository.findOrCreate(message.getUserVkId());
+        BaseHandler handler = null;
+        boolean isSuccess = false;
 
-        if(user.getLastMessageSec() != null && message.getSecondAfterUnixAge() <= user.getLastMessageSec())
-            return;
+        User user = userRepository.findByVkId(message.getUserVkId());
+        if(user != null){
 
-        userRepository.updateLastDateById(user.getId(), Instant.now().getEpochSecond());
+            if(user.getLastMessageSec() != null && message.getSecondAfterUnixAge() <= user.getLastMessageSec())
+                return;
 
-        Action prevAction = lastActionStorage.get(user.getId());
-        BaseHandler handler = actionHandlersStorage.getHandler(defineActionService.define(message, prevAction));
+            userRepository.updateLastDateMessage(user.getId(), Instant.now().getEpochSecond());
 
-        boolean isSuccess = handler.handle(message, user);
+            Action prevAction = lastActionStorage.get(user.getId());
+            handler = actionHandlersStorage.getHandler(defineActionService.define(message, prevAction));
+
+            isSuccess = handler.handle(message, user);
+        }else{
+            user = userRepository.save(User.builder().vkId(message.getUserVkId()).build());
+
+            handler = actionHandlersStorage.getHandler(Action.ASK_NICKNAME);
+
+            isSuccess = handler.handle(message, user);
+        }
 
         if(isSuccess)
             lastActionStorage.put(user.getId(), handler.getProcessingAction());

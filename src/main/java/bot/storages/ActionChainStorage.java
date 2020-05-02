@@ -11,6 +11,11 @@ import java.util.*;
 public class ActionChainStorage {
 
     @Bean
+    public ActionChain initChain(){
+        return new ActionChain(Action.ASK_NICKNAME, Action.ASK_PROFESSION_AND_SAVE_NICK, Action.ASK_NOTIFICATION_TIME_AND_SAVE_PROFESSION);
+    }
+
+    @Bean
     public ActionChain registrAttachmentChain(){
         return new ActionChain(Action.ADD_ATTACHMENT, Action.SET_ATTACHMENT_NAME, Action.SET_ATTACHMENT_TOPIC_BY_KEYBOARD);
     }

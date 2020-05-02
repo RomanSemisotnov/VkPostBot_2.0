@@ -27,4 +27,10 @@ public class User {
     @Column(name = "last_message")
     private Long lastMessageSec;
 
+    @Column(name = "profession")
+    private String profession;
+
+    @Column(name = "nick_name")
+    private String nickName;
+
 }

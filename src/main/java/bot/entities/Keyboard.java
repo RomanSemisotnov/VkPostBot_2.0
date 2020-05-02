@@ -19,6 +19,14 @@ public class Keyboard {
         this.buttons=buttons;
     }
 
+    public static Keyboard ofProfession(List<String> professions){
+        List<List<TextButton>> buttons = new ArrayList<>();
+        for(String profession : professions){
+            buttons.add(List.of(new TextButton( new Action (profession, null))));
+        }
+        return new Keyboard(buttons);
+    }
+
     public static Keyboard ofSetReadAttachment(Attachment attachment){
         TextButton notRead = new TextButton( new Action ("Я не прочитал", Map.of("attachment_id", attachment.getId(),
                 "neededAction", bot.enums.Action.SET_READ_ATTACHMENT, "isRead", "false")));

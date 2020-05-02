@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS users
     vk_id integer UNIQUE NOT NULL,
     last_message bigint,
     nick_name text,
-    profession text
+    profession text,
+    frequency_remember text,
+    not_read_count text
 );
 
 CREATE TABLE IF NOT EXISTS topics

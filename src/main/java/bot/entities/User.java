@@ -27,10 +27,16 @@ public class User {
     @Column(name = "last_message")
     private Long lastMessageSec;
 
+    @Column(name = "nick_name")
+    private String nickName;
+
     @Column(name = "profession")
     private String profession;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    @Column(name = "frequency_remember")
+    private String frequencyRemember;
+
+    @Column(name = "not_read_count")
+    private String notReadCount;
 
 }

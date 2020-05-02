@@ -12,7 +12,9 @@ public class ActionChainStorage {
 
     @Bean
     public ActionChain initChain(){
-        return new ActionChain(Action.ASK_NICKNAME, Action.ASK_PROFESSION_AND_SAVE_NICK, Action.ASK_NOTIFICATION_TIME_AND_SAVE_PROFESSION);
+        return new ActionChain(Action.ASK_NICKNAME, Action.SAVE_NICK_AND_ASK_PROFESSION,
+                Action.SAVE_PROFESSION_AND_ASK_FREQUENCY_REMEMBER, Action.SAVE_FREQUENCY_REMEMBER_AND_ASK_NOT_READ_COUNT,
+                Action.SAVE_NOT_READ_COUNT_AND_ASK_REMINDER_TIME);
     }
 
     @Bean

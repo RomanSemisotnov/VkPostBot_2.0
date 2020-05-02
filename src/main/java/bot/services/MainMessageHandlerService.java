@@ -35,7 +35,7 @@ public class MainMessageHandlerService {
         boolean isSuccess = false;
 
         User user = userRepository.findByVkId(message.getUserVkId());
-        if(user != null){
+        if(user != null && user.getNickName() != null){
 
             if(user.getLastMessageSec() != null && message.getSecondAfterUnixAge() <= user.getLastMessageSec())
                 return;
@@ -47,7 +47,8 @@ public class MainMessageHandlerService {
 
             isSuccess = handler.handle(message, user);
         }else{
-            user = userRepository.save(User.builder().vkId(message.getUserVkId()).build());
+            if(user == null)
+                user = userRepository.save(User.builder().vkId(message.getUserVkId()).build());
 
             handler = actionHandlersStorage.getHandler(Action.ASK_NICKNAME);
 

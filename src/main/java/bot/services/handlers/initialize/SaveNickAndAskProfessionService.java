@@ -7,11 +7,12 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-@Processing(Action.ASK_PROFESSION_AND_SAVE_NICK)
-public class AskProfessionAndSaveNickService extends BaseHandler {
+@Processing(Action.SAVE_NICK_AND_ASK_PROFESSION)
+public class SaveNickAndAskProfessionService extends BaseHandler {
 
 
 
@@ -19,7 +20,7 @@ public class AskProfessionAndSaveNickService extends BaseHandler {
     public boolean handle(MessageBody body, User user) {
 
         String nickName = body.getText().trim();
-        if(nickName.equals("")){
+        if(StringUtils.isNotEmpty(nickName)){
             vkSenderService.send(VkMessage.builder()
                     .vkId(user.getVkId())
                     .textMessage("Вы так и не сказали как называть Вас, может быть 'Сэр', 'Милорд'?")
@@ -29,7 +30,7 @@ public class AskProfessionAndSaveNickService extends BaseHandler {
 
         userRepository.updateNickName(user.getId(), nickName);
 
-        Keyboard keyboard = Keyboard.ofProfession(List.of("Маркетолог", "Дизайнер", "Программист"));
+        Keyboard keyboard = Keyboard.ofTextButtons(List.of("Маркетолог", "Дизайнер", "Программист"));
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
                 .textMessage("Укажите пожалуйста чем вы занимаетесь, если это что-то другое, введите текстом")

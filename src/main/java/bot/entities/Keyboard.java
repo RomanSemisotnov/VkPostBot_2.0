@@ -19,7 +19,7 @@ public class Keyboard {
         this.buttons=buttons;
     }
 
-    public static Keyboard ofProfession(List<String> professions){
+    public static Keyboard ofTextButtons(List<String> professions){
         List<List<TextButton>> buttons = new ArrayList<>();
         for(String profession : professions){
             buttons.add(List.of(new TextButton( new Action (profession, null))));

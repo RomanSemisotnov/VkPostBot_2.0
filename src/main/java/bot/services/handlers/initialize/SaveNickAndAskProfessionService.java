@@ -7,7 +7,6 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 

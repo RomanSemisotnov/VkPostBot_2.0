@@ -20,7 +20,7 @@ public class SaveNickAndAskProfessionService extends BaseHandler {
     public boolean handle(MessageBody body, User user) {
 
         String nickName = body.getText().trim();
-        if(StringUtils.isNotEmpty(nickName)){
+        if(nickName.isEmpty()){
             vkSenderService.send(VkMessage.builder()
                     .vkId(user.getVkId())
                     .textMessage("Вы так и не сказали как называть Вас, может быть 'Сэр', 'Милорд'?")

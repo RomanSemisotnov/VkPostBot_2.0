@@ -35,20 +35,15 @@ public class MainMessageHandlerService {
         boolean isSuccess = false;
 
         User user = userRepository.findByVkId(message.getUserVkId());
-        if(user != null && user.getNickName() != null){
-
-            if(user.getLastMessageSec() != null && message.getSecondAfterUnixAge() <= user.getLastMessageSec())
-                return;
-
+        if(user != null){
             userRepository.updateLastDateMessage(user.getId(), Instant.now().getEpochSecond());
 
             Action prevAction = lastActionStorage.get(user.getId());
             handler = actionHandlersStorage.getHandler(defineActionService.define(message, prevAction));
 
             isSuccess = handler.handle(message, user);
-        }else{
-            if(user == null)
-                user = userRepository.save(User.builder().vkId(message.getUserVkId()).build());
+        } else {
+            user = userRepository.save(User.builder().vkId(message.getUserVkId()).build());
 
             handler = actionHandlersStorage.getHandler(Action.ASK_NICKNAME);
 

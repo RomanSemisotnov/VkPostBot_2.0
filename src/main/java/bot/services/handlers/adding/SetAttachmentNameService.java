@@ -26,6 +26,15 @@ public class SetAttachmentNameService extends BaseHandler {
             return false;
         }
 
+        if(attachmentRepository.findWithSameName(user.getId(), name) != null){
+            vkSenderService.send(VkMessage.builder()
+                    .vkId(user.getVkId())
+                    .textMessage("Вы уже сохраняли вложение с таким именем")
+                    .build()
+            );
+            return false;
+        }
+
         Attachment newAttachment = lastIncomingAttachmentStorage.get(user.getId());
         Topic topicWithoutName = topicRepository.getWithoutName(user.getId());
         newAttachment.setName(name);

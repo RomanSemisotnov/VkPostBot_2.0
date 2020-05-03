@@ -30,9 +30,8 @@ public class DefineActionService {
         if (body.getAttachments() != null) // we have attachment
             return Action.ADD_ATTACHMENT;
 
-        String message = body.getText();
-        if (anyCommandPattern.matcher(message).matches()) {  // we got any command
-            String command = message.toLowerCase().trim();
+        if (anyCommandPattern.matcher(body.getText()).matches()) {  // we got any command
+            String command = body.getText().toLowerCase().trim();
             if(addTopicCommandPattern.matcher(command).matches())
                 return Action.ADD_TOPIC_BY_COMMAND;
 

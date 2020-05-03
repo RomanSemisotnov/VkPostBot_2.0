@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment,Integer> {
 
+    List<Attachment> findByTopicIdAndIsRead(Integer topicId, boolean isRead);
+
     default Attachment findSameAttachmentAtUser(Integer userId, Integer vkIdentifier){
         List<Attachment> attachments = findSameAttachmentAtUser(userId, vkIdentifier, PageRequest.of(0, 1)).getContent();
 
@@ -24,8 +26,6 @@ public interface AttachmentRepository extends JpaRepository<Attachment,Integer> 
         return attachments.get(0);
     }
 
-    List<Attachment> findByTopicIdAndIsRead(Integer topicId, boolean isRead);
-
     @Query( value =
     "SELECT att FROM Attachment att " +
             "WHERE att.topic.userId = :user_id " +
@@ -34,6 +34,25 @@ public interface AttachmentRepository extends JpaRepository<Attachment,Integer> 
     Page<Attachment> findSameAttachmentAtUser(
             @Param("user_id") Integer userId,
             @Param("vk_identifier") Integer vkIdentifier,
+            Pageable pageable
+    );
+
+    default Attachment findWithSameName(Integer userId, String name){
+        List<Attachment> attachments = findByUserIdAndName(userId, name, PageRequest.of(0, 1)).getContent();
+
+        if(attachments.isEmpty())
+            return null;
+
+        return attachments.get(0);
+    }
+
+    @Query( value =
+            "SELECT att FROM Attachment att " +
+                    "WHERE att.topic.userId = :user_id " +
+                    "AND att.name = :name ")
+    Page<Attachment> findByUserIdAndName(
+            @Param("user_id") Integer userId,
+            @Param("name") String name,
             Pageable pageable
     );
 

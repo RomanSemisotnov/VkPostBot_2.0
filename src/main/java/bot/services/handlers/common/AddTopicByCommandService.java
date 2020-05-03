@@ -16,15 +16,13 @@ import java.util.regex.Pattern;
 @Processing(Action.ADD_TOPIC_BY_COMMAND)
 public class AddTopicByCommandService extends BaseHandler {
 
-    @Autowired
-    private Pattern moreOneSpacePattern;
+    private final Pattern addPattern = Pattern.compile(Action.ADD_TOPIC_BY_COMMAND.getCommand());
 
     @Override
     public boolean handle(MessageBody body, User user) {
         System.out.println("Добавление топика по команде");
 
-        String topicName = moreOneSpacePattern.matcher(body.getText()).replaceAll(" ").trim().substring(1).trim();
-
+        String topicName = addPattern.matcher(body.getText()).replaceAll("").trim();
         if(topicName.equals(TopicRepository.withoutName)){
             vkSenderService.send(VkMessage.builder()
                     .vkId(user.getVkId())

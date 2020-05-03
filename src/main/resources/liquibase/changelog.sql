@@ -10,6 +10,14 @@ CREATE TABLE IF NOT EXISTS users
     not_read_count text
 );
 
+CREATE TABLE IF NOT EXISTS reminders
+(
+    id      serial PRIMARY KEY,
+    day_number int NOT NULL,
+    time time NOT NULL,
+    user_id int  NOT NULL REFERENCES users (id) on delete cascade
+);
+
 CREATE TABLE IF NOT EXISTS topics
 (
     id      bigserial PRIMARY KEY,

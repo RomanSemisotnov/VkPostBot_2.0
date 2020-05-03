@@ -4,6 +4,7 @@ import bot.entities.MessageBody;
 import bot.entities.User;
 import bot.enums.Action;
 import bot.repositories.AttachmentRepository;
+import bot.repositories.ReminderRepository;
 import bot.repositories.TopicRepository;
 import bot.repositories.UserRepository;
 import bot.services.vkClient.VkMessageSenderService;
@@ -14,6 +15,9 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseHandler{
+
+    @Autowired
+    protected ReminderRepository reminderRepository;
 
     @Autowired
     protected UserRepository userRepository;

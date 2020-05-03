@@ -15,13 +15,14 @@ public class AskNicknameService extends BaseHandler {
 
     @Override
     public boolean handle(MessageBody body, User user) {
-
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage("Добро пожаловать, ПРИДУМАТЬ СЮДА ТЕКСТ, как вас величать?")
+                .textMessage("Добро пожаловать, перед началом работы позвольте задать Вам пару вопросов, это нужно для более эффективной работы нашего Бота.")
                 .build());
-
-
+        vkSenderService.send(VkMessage.builder()
+                .vkId(user.getVkId())
+                .textMessage("Для начала скажите, как ты хотите, чтобы к Вам обращались?)")
+                .build());
         return true;
     }
 

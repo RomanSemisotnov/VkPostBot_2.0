@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS reminders
 (
     id      serial PRIMARY KEY,
-    day_number int NOT NULL,
+    day_number int NOT NULL CHECK (day_number < 8 and day_number >0),
     time time NOT NULL,
     user_id int  NOT NULL REFERENCES users (id) on delete cascade
 );

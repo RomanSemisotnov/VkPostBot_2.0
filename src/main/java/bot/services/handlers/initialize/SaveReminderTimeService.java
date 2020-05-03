@@ -5,53 +5,60 @@ import bot.entities.MessageBody;
 import bot.entities.Reminder;
 import bot.entities.User;
 import bot.enums.Action;
+import bot.enums.DaysOfweek;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Time;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @Processing(Action.SAVE_REMINDER_TIME)
 public class SaveReminderTimeService extends BaseHandler {
 
-    private final List<Integer> daysOfWeek = List.of(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY,
-            Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY);
-
     private final DateFormat formatter = new SimpleDateFormat("HH:mm");
+
+    private final Pattern timePattern = Pattern.compile("^0[0-9]|1[0-9]|2[0-3]:[0-5][0-9]$");
+
+    @Autowired
+    private DaysOfweek daysOfweek;
 
     @Override
     public boolean handle(MessageBody body, User user) {
-        String[] dates = body.getText().split(",");
+        String[] times = body.getText().split(",");
 
-        Time time;
-        List<String> errors = new ArrayList<>();
+        Time t;
         List<Reminder> reminders = new ArrayList<>();
-        for(String date : dates){
+        List<String> formatErrors = new ArrayList<>();
+        for(String time : times){
             try {
-                time = new Time(formatter.parse(date).getTime());
+                t = new Time(formatter.parse(time).getTime());
 
-                for(Integer dayNumber : daysOfWeek){
+                if(!timePattern.matcher(time.trim()).matches())
+                    throw new IllegalArgumentException();
+
+                for(Map.Entry<Integer, String> day : daysOfweek.getMap().entrySet()){
                     reminders.add(Reminder.builder()
                             .userId(user.getId())
-                            .time(time)
-                            .dayNumber(dayNumber)
+                            .time(t)
+                            .dayNumber(day.getKey())
                             .build());
                 }
-            } catch (ParseException e) {
-                errors.add(date);
+            } catch (Exception e) {
+                formatErrors.add(time);
             }
             reminderRepository.saveAll(reminders);
             reminders.clear();
         }
 
         String message;
-        if(!errors.isEmpty()){
-            message = "Время: " + String.join(", ", errors) + " введенно неверно, указанные времена добавленны не будут";
+        if(!formatErrors.isEmpty()){
+            message = "Время: " + String.join(", ", formatErrors) + " введенно неверно, указанные времена не были добавленны";
         }else{
             message = "Успешно сохраненно";
         }
@@ -62,7 +69,6 @@ public class SaveReminderTimeService extends BaseHandler {
                 .build());
         return true;
     }
-
 
 
 }

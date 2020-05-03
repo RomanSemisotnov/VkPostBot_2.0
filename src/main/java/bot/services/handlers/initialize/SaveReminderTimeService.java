@@ -58,7 +58,7 @@ public class SaveReminderTimeService extends BaseHandler {
 
         String message;
         if(!formatErrors.isEmpty()){
-            message = "Время: " + String.join(", ", formatErrors) + " введенно неверно, указанные времена не были добавленны";
+            message = "Время: " + String.join(", ", formatErrors) + " добавленно не будет, т.к введенно не корректно";
         }else{
             message = "Успешно сохраненно";
         }

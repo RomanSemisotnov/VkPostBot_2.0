@@ -18,7 +18,7 @@ public class ShowMenuService extends BaseHandler {
     public boolean handle(MessageBody body, User user) {
 
         vkSenderService.send(VkMessage.builder()
-                .vkId(user.getId())
+                .vkId(user.getVkId())
                 .textMessage("1.Если хотите что-то почитать, нажмите на кнопку снизу.\n" +
                         "2.Для добавления новой темы введите: '" + Action.ADD_TOPIC_BY_COMMAND + " <НАЗВАНИЕ ТЕМЫ> '\n" +
                         "3.Если хотите добавить вложение, просто сбросте мне его в ЛС")

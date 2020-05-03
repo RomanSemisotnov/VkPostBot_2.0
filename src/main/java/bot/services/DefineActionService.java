@@ -23,19 +23,24 @@ public class DefineActionService {
     @Autowired
     private Pattern getTopicCommandPattern;
 
+    @Autowired
+    private Pattern getMenuPattern;
+
     public Action define(MessageBody body, Action prevAction) {
         if (body.getAttachments() != null) // we have attachment
             return Action.ADD_ATTACHMENT;
 
         String message = body.getText();
         if (anyCommandPattern.matcher(message).matches()) {  // we got any command
-
-            if(addTopicCommandPattern.matcher(message.toLowerCase()).matches())
+            String command = message.toLowerCase().trim();
+            if(addTopicCommandPattern.matcher(command).matches())
                 return Action.ADD_TOPIC_BY_COMMAND;
 
-            if (getTopicCommandPattern.matcher(message.toLowerCase()).matches())
+            if (getTopicCommandPattern.matcher(command).matches())
                 return Action.GET_TOPICS_BY_COMMAND;
 
+            if(getMenuPattern.matcher(command).matches())
+                return Action.SHOW_MENU;
         }
 
         if (body.getPayload() != null && body.getPayload().containsKey("neededAction")) // we got message from keyboard

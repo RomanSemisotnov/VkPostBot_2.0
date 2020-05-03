@@ -20,6 +20,11 @@ public class PatterntsMatchConfig {
     }
 
     @Bean
+    public Pattern getMenuPattern() {
+        return Pattern.compile("^\\s*[" + Action.SHOW_MENU.getCommand() + "]\\s*[\\S+\\s*]+$");
+    }
+
+    @Bean
     public Pattern anyCommandPattern() {
         String allCommands = "(";
         for (Action command : Action.values()) {

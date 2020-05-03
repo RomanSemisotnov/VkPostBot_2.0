@@ -23,7 +23,8 @@ public enum Action {
     START_DELETE_TOPIC, FINISH_DELETE_TOPIC,
 
     //others
-    ADD_TOPIC_BY_COMMAND("+"),
+    SHOW_MENU("/меню"),
+    ADD_TOPIC_BY_COMMAND("/добавить"),
     UNKNOWN_ACTION;
 
     private String command;

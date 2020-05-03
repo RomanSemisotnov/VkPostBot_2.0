@@ -23,7 +23,7 @@ public class SaveReminderTimeService extends BaseHandler {
 
     private final DateFormat formatter = new SimpleDateFormat("HH:mm");
 
-    private final Pattern timePattern = Pattern.compile("^0[0-9]|1[0-9]|2[0-3]:[0-5][0-9]$");
+    private final Pattern timePattern = Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$");
 
     @Autowired
     private DaysOfweek daysOfweek;
@@ -52,8 +52,10 @@ public class SaveReminderTimeService extends BaseHandler {
             } catch (Exception e) {
                 formatErrors.add(time);
             }
-            reminderRepository.saveAll(reminders);
-            reminders.clear();
+            if(!reminders.isEmpty()){
+                reminderRepository.saveAll(reminders);
+                reminders.clear();
+            }
         }
 
         String message;

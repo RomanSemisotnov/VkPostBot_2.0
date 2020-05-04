@@ -10,9 +10,9 @@ import bot.services.vkClient.VkMessage;
 @Processing(Action.UNKNOWN_ACTION)
 public class UnknownActionService extends BaseHandler {
 
-    String message1 = "Вам что-то подсказать?) Введите '" + Action.SHOW_MENU + "' для справки";
+    String message1 = "Вам что-то подсказать?) Введите '" + Action.SHOW_MENU.getCommand() + "' для справки";
 
-    String message2 = "Чем я могу Вам помочь?) Введите '" + Action.SHOW_MENU + "' для справки";
+    String message2 = "Чем я могу Вам помочь?) Введите '" + Action.SHOW_MENU.getCommand() + "' для справки";
 
     @Override
     public boolean handle(MessageBody body, User user) {

@@ -31,15 +31,18 @@ public class Keyboard {
         return new Keyboard(buttons);
     }
 
-    public static Keyboard ofSetReadAttachment(Attachment attachment){
+    public static Keyboard ofSetReadStatusSpecificAttachment(Attachment attachment){
         TextButton notRead = new TextButton( new Action ("Я не прочитал", Map.of("attachment_id", attachment.getId(),
                 "neededAction", bot.enums.Action.SET_READ_ATTACHMENT, "isRead", "false")));
         TextButton read = new TextButton( new Action ("Я прочитал", Map.of("attachment_id", attachment.getId(),
                 "neededAction", bot.enums.Action.SET_READ_ATTACHMENT, "isRead", "true")));
+        TextButton readOther = new TextButton( new Action ("Прочитать другое из топика", Map.of("topic_id", attachment.getTopicId(),
+                "neededAction", bot.enums.Action.SHOW_ATTACHMENTS)) );
 
         List<List<TextButton>> buttons = new ArrayList<>();
-        buttons.add(List.of(notRead));
         buttons.add(List.of(read));
+        buttons.add(List.of(notRead));
+        buttons.add(List.of(readOther));
         return new Keyboard(buttons);
     }
 

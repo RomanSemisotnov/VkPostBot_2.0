@@ -8,7 +8,6 @@ import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class ReadAttachmentService extends BaseHandler {
         }
         Attachment neededAttachment = attachments.get(attachmentIndex - 1);
 
-        Keyboard keyboard = Keyboard.ofSetReadAttachment(neededAttachment);
+        Keyboard keyboard = Keyboard.ofSetReadStatusSpecificAttachment(neededAttachment);
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
                 .attachment(neededAttachment)

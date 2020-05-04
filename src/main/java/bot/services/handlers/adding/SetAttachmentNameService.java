@@ -43,8 +43,7 @@ public class SetAttachmentNameService extends BaseHandler {
 
         String message = "Укажите тему, к которой хотите отнести этот пост, " +
                 "если такой темы нету, " +
-                "то введите новую тему в сообщении, используя в начале символ '" + Action.ADD_TOPIC_BY_COMMAND.getCommand() +
-                "' , например ' + Новая тема '";
+                "то добавте новую тему след. образом: '" + Action.ADD_TOPIC_BY_COMMAND + " <НАЗВАНИЕ ТЕМЫ> '";
 
         List<Topic> topics = topicRepository.findByUserIdOrderByName(user.getId());
         topicWithoutNameToEnd(topics, user.getId());

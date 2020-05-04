@@ -12,7 +12,6 @@ public class SetReadAttachmentService extends BaseHandler {
 
 
 
-
     @Override
     public boolean handle(MessageBody body, User user) {
         System.out.println("Обновляем поле прочитанно у вложения");
@@ -22,7 +21,7 @@ public class SetReadAttachmentService extends BaseHandler {
 
         attachmentRepository.updateRead(attachmentId, isRead);
 
-        String message = isRead ? "бла бла бла придумать что прочитать" : "Хотите прочитать чтонибудь другое? Введите /темы";
+        String message = isRead ? "Успешно обновленно" : "Хотите прочитать чтонибудь другое? Введите /темы";
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
                 .textMessage(message)

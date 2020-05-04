@@ -9,7 +9,6 @@ import bot.enums.Action;
 import bot.repositories.TopicRepository;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.regex.Pattern;
 

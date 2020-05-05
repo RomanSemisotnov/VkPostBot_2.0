@@ -25,8 +25,8 @@ public class Keyboard {
 
     public static Keyboard ofTurn(User user){
         List<List<TextButton>> buttons = new ArrayList<>();
-        buttons.add(List.of(new TextButton( new Action ("Здравствуйте, " + user.getName(), Map.of("isDefault", true)))));
-        buttons.add(List.of(new TextButton( new Action ("Привет, " + user.getName(), Map.of("isDefault", true)))));
+        buttons.add(List.of(new TextButton( new Action ("Здравствуйте, " + user.getName(), Map.of("isDefault", "true")))));
+        buttons.add(List.of(new TextButton( new Action ("Привет, " + user.getName(), Map.of("isDefault", "true")))));
         return new Keyboard(buttons);
     }
 

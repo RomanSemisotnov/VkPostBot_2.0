@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VkMessageSenderService extends AbstractMessageSenderService {
+public class VkMessageSenderService extends BaseVkClient {
 
     @Autowired
     private ObjectMapper mapper;

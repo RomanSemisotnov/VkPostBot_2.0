@@ -9,11 +9,14 @@ import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
-@Processing(Action.SAVE_NICK_AND_ASK_PROFESSION)
-public class SaveNickAndAskProfessionService extends BaseHandler {
+@Processing(Action.SAVE_TURN_AND_ASK_PROFESSION)
+public class SaveTurnAndAskProfessionService extends BaseHandler {
 
+    private final Pattern privatePattern = Pattern.compile("^Привет");
 
+    private final Pattern zdravPattern = Pattern.compile("^Здравст");
 
     @Override
     public boolean handle(MessageBody body, User user) {
@@ -27,7 +30,16 @@ public class SaveNickAndAskProfessionService extends BaseHandler {
             return false;
         }
 
-        userRepository.updateNickName(user.getId(), nickName);
+        boolean isDefault = body.getPayload() != null && Boolean.parseBoolean((String) body.getPayload().get("isDefault"));
+
+        if(isDefault){
+            user.setCustomTurnFlag(false);
+            user.setDefaultTurn(body.getText().split(",")[0] + ", ");
+        }else{
+            user.setCustomTurnFlag(true);
+            user.setCustomTurn(body.getText().trim());
+        }
+        sessionFactory.getCurrentSession().update(user);
 
         Keyboard keyboard = Keyboard.ofTextButtons(List.of("Маркетолог", "Дизайнер", "Программист"));
         vkSenderService.send(VkMessage.builder()

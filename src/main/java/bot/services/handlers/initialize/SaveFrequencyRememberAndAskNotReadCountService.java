@@ -22,7 +22,8 @@ public class SaveFrequencyRememberAndAskNotReadCountService extends BaseHandler 
     public boolean handle(MessageBody body, User user) {
         String frequencyRemember = body.getText().trim();
         if(StringUtils.isNotEmpty(frequencyRemember)){
-            userRepository.updateFrequencyRemember(user.getId(), frequencyRemember);
+            user.getStats().setFrequencyRemember(frequencyRemember);
+            sessionFactory.getCurrentSession().update(user.getStats());
         }
 
         Keyboard keyboard = Keyboard.ofTextButtons(List.of("1-3", "3-7", "7-12", "Больше 12"));

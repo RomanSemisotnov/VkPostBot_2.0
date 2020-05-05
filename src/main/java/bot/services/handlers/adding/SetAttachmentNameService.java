@@ -39,11 +39,11 @@ public class SetAttachmentNameService extends BaseHandler {
         Topic topicWithoutName = topicRepository.getWithoutName(user.getId());
         newAttachment.setName(name);
         newAttachment.setTopicId(topicWithoutName.getId());
-        attachmentRepository.save(newAttachment);
+        lastIncomingAttachmentStorage.put(user.getId(), attachmentRepository.save(newAttachment));
 
         String message = "Укажите тему, к которой хотите отнести этот пост, " +
                 "если такой темы нету, " +
-                "то добавте новую тему след. образом: '" + Action.ADD_TOPIC_BY_COMMAND + " <НАЗВАНИЕ ТЕМЫ> '";
+                "то добавте новую тему след. образом: '" + Action.ADD_TOPIC_BY_COMMAND.getCommand() + " <НАЗВАНИЕ ТЕМЫ> '";
 
         List<Topic> topics = topicRepository.findByUserIdOrderByName(user.getId());
         topicWithoutNameToEnd(topics, user.getId());

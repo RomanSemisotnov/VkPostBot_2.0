@@ -24,12 +24,13 @@ public class SetAttachmenTopicByKeyboardService extends BaseHandler {
         String message;
         if(topicId == null){
             topicId = topicRepository.getWithoutName(user.getId()).getId();
-            message = "Вложение сохраненно в раздел '" + TopicRepository.withoutName + "'";
+            message = "Вложение сохранено в раздел '" + TopicRepository.withoutName + "'";
         }else{
-            message = "Успешно сохраненно.";
+            message = "Успешно сохранено.";
         }
 
-        attachmentRepository.updateAttachmentTopic(attachment.getId(), topicId);
+        attachment.setTopicId(topicId);
+        sessionFactory.getCurrentSession().update(attachment);
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())

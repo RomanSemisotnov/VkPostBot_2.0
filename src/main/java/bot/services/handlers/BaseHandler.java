@@ -7,14 +7,22 @@ import bot.repositories.AttachmentRepository;
 import bot.repositories.ReminderRepository;
 import bot.repositories.TopicRepository;
 import bot.repositories.UserRepository;
+import bot.services.common.UserService;
 import bot.services.vkClient.VkMessageSenderService;
 import bot.storages.LastIncomingAttachmentStorage;
 import bot.storages.TopicStorage;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseHandler{
+
+    @Autowired
+    protected SessionFactory sessionFactory;
+
+    @Autowired
+    protected UserService userService;
 
     @Autowired
     protected ReminderRepository reminderRepository;

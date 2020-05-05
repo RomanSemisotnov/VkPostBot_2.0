@@ -61,10 +61,6 @@ public interface AttachmentRepository extends JpaRepository<Attachment,Integer> 
     void updateRead(@Param("attach_id") Integer attachId, @Param("is_read") Boolean isRead);
 
     @Modifying
-    @Query("UPDATE Attachment att SET att.topicId = :topic_id WHERE att.id = :attach_id")
-    void updateAttachmentTopic(@Param("attach_id") Integer attachId, @Param("topic_id") Integer topicId);
-
-    @Modifying
     @Query("UPDATE Attachment att SET att.topicId = :topic_id WHERE att.id IN (:attach_ids)")
     void updateAttachmentsTopic(@Param("attach_ids") List<Integer> attachId, @Param("topic_id") Integer topicId);
 

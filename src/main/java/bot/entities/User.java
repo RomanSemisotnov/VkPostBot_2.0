@@ -20,6 +20,9 @@ public class User {
     @Column(name = "vk_id")
     private int vkId;
 
+    @Column(name = "name")
+    private String name;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics;
@@ -31,16 +34,17 @@ public class User {
     @Column(name = "last_message")
     private Long lastMessageSec;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    @Column(name = "default_turn")
+    private String defaultTurn;
 
-    @Column(name = "profession")
-    private String profession;
+    @Column(name = "is_custom_turn")
+    private boolean isCustomTurnFlag;
 
-    @Column(name = "frequency_remember")
-    private String frequencyRemember;
+    @Column(name = "custom_turn")
+    private String customTurn;
 
-    @Column(name = "not_read_count")
-    private String notReadCount;
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private UserStats stats;
 
 }

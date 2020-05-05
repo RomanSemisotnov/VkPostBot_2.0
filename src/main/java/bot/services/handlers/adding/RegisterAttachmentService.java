@@ -20,7 +20,7 @@ public class RegisterAttachmentService extends BaseHandler {
         if(identicalAttachment != null){
             vkSenderService.send(VkMessage.builder()
                     .vkId(user.getVkId())
-                    .textMessage("Такое вложение уже сохраненно!")
+                    .textMessage("Такое вложение уже сохранено!")
                     .build());
             return false;
         }

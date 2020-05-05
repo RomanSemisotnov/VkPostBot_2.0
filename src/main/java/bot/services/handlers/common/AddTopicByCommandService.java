@@ -43,7 +43,8 @@ public class AddTopicByCommandService extends BaseHandler {
 
         String msg;
         if(attachment != null){
-            attachmentRepository.updateAttachmentTopic(attachment.getId(), topic.getId());
+            attachment.setTopicId(topic.getId());
+            sessionFactory.getCurrentSession().update(attachment);
 
             msg = "Вложение и топик успешно сохраненны.";
         } else {

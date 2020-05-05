@@ -8,6 +8,7 @@ import bot.enums.Action;
 import bot.enums.DaysOfweek;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Time;
@@ -29,48 +30,37 @@ public class SaveReminderTimeService extends BaseHandler {
     private DaysOfweek daysOfweek;
 
     @Override
+    @SneakyThrows
     public boolean handle(MessageBody body, User user) {
-        String[] times = body.getText().split(",");
+        String time = body.getText().trim();
 
-        Time t;
-        List<Reminder> reminders = new ArrayList<>();
-        List<String> formatErrors = new ArrayList<>();
-        for(String time : times){
-            try {
-                t = new Time(formatter.parse(time).getTime());
-
-                if(!timePattern.matcher(time.trim()).matches())
-                    throw new IllegalArgumentException();
-
-                for(Map.Entry<Integer, String> day : daysOfweek.getMap().entrySet()){
-                    reminders.add(Reminder.builder()
-                            .userId(user.getId())
-                            .time(t)
-                            .dayNumber(day.getKey())
-                            .build());
-                }
-            } catch (Exception e) {
-                formatErrors.add(time);
-            }
-            if(!reminders.isEmpty()){
-                reminderRepository.saveAll(reminders);
-                reminders.clear();
-            }
+        if(!timePattern.matcher(time).matches()){
+            vkSenderService.send(VkMessage.builder()
+                    .vkId(user.getVkId())
+                    .textMessage("Время указанно неккоректно, укажите время в формате ЧЧ:ММ, например : 09:30 или 19:55")
+                    .build());
+            return false;
         }
 
-        String message;
-        if(!formatErrors.isEmpty()){
-            message = "Время: " + String.join(", ", formatErrors) + " добавленно не будет, т.к введенно не корректно";
-        }else{
-            message = "Успешно сохраненно";
+        List<Reminder> reminders = new ArrayList<>();
+        for(Map.Entry<Integer, String> day : daysOfweek.getMap().entrySet()){
+            reminders.add(Reminder.builder()
+                    .userId(user.getId())
+                    .time(new Time(formatter.parse(time).getTime()))
+                    .dayNumber(day.getKey())
+                    .build());
+        }
+
+        if(!reminders.isEmpty()){
+            reminderRepository.saveAll(reminders);
+            reminders.clear();
         }
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage(message)
+                .textMessage("Успешно сохранено")
                 .build());
         return true;
     }
-
 
 }

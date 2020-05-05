@@ -21,15 +21,16 @@ public class SaveNotReadCountAndAskReminderTimeService extends BaseHandler {
     public boolean handle(MessageBody body, User user) {
         String notReadCount = body.getText().trim();
         if(StringUtils.isNotEmpty(notReadCount)){
-            userRepository.updateNotReadCount(user.getId(), notReadCount);
+            user.getStats().setNotReadCount(notReadCount);
+            sessionFactory.getCurrentSession().update(user.getStats());
         }
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage("Уважаемый " + user.getNickName() + ", по умолчанию я буду напоминать Вам каждый день о вложениях, которые Вы сохраняете " +
-                        "(эту настройку можно будет изменить), выберите время в формате ЧЧ:ММ в которое я буду писать Вам, " +
-                        "если хотите что-бы я делал это несколько раз в день, укажите время через запятую, НАПРИМЕР 00:30, 09:50, 19:30")
-                .keyboard(Keyboard.ofTextButtons(List.of("13:30", "19:30", "13:30, 19:30")))
+                .textMessage(user.getName() + ", по умолчанию я буду напоминать Вам каждый день о вложениях, которые Вы сохраняете " +
+                        "(эту настройку можно будет изменить), выберите время в которое я буду писать Вам, " +
+                        "если хотите указать свое время, то просто напишите мне его в формате ЧЧ:ММ ")
+                .keyboard(Keyboard.ofTextButtons(List.of("13:30", "19:30", "21:30")))
                 .build());
         return true;
     }

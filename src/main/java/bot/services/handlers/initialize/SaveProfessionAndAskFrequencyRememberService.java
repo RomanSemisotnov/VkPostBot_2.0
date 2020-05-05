@@ -22,7 +22,8 @@ public class SaveProfessionAndAskFrequencyRememberService extends BaseHandler {
 
         String profession = body.getText().trim();
         if(StringUtils.isNotEmpty(profession)){
-            userRepository.updateProfession(user.getId(), profession);
+            user.getStats().setProfession(profession);
+            sessionFactory.getCurrentSession().update(user.getStats());
         }
 
         Keyboard keyboard = Keyboard.ofTextButtons(List.of("Каждый день", "В течение 2-3 дней",

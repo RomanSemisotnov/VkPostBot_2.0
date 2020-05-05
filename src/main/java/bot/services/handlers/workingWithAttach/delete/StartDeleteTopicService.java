@@ -1,4 +1,4 @@
-package bot.services.handlers.working.delete;
+package bot.services.handlers.workingWithAttach.delete;
 
 import bot.annotations.Processing;
 import bot.entities.*;

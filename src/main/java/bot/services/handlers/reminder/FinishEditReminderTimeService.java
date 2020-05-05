@@ -1,8 +1,7 @@
-package bot.services.handlers.initialize;
+package bot.services.handlers.reminder;
 
 import bot.annotations.Processing;
 import bot.entities.MessageBody;
-import bot.entities.Reminder;
 import bot.entities.User;
 import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
@@ -15,16 +14,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
-@Processing(Action.SAVE_REMINDER_TIME)
-public class SaveReminderTimeService extends BaseHandler {
+@Processing(Action.FINISH_EDIT_REMINDER_TIME)
+public class FinishEditReminderTimeService extends BaseHandler {
 
     private final DateFormat formatter = new SimpleDateFormat("HH:mm");
 
     @Autowired
     private Pattern timePattern;
-
-   // @Autowired
-   // private DaysOfweek daysOfweek;
 
     @Override
     @SneakyThrows
@@ -39,30 +35,16 @@ public class SaveReminderTimeService extends BaseHandler {
             return false;
         }
 
-        /*List<Reminder> reminders = new ArrayList<>();
-        for(Map.Entry<Integer, String> day : daysOfweek.getMap().entrySet()){
-            reminders.add(Reminder.builder()
-                    .userId(user.getId())
-                    .time(new Time(formatter.parse(time).getTime()))
-                    .dayNumber(day.getKey())
-                    .build());
-        }
-
-        if(!reminders.isEmpty()){
-            reminderRepository.saveAll(reminders);
-            reminders.clear();
-        }*/
-
-        reminderRepository.save(Reminder.builder()
-                .userId(user.getId())
-                .time(new Time(formatter.parse(time).getTime()))
-                .build());
+        user.getReminder().setTime(new Time(formatter.parse(time).getTime()));
+        sessionFactory.getCurrentSession().update(user.getReminder());
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage("Успешно сохранено")
+                .textMessage("Успешно обновлено")
                 .build());
         return true;
     }
+
+
 
 }

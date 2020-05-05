@@ -18,8 +18,8 @@ public class Reminder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "day_number")
-    private Integer dayNumber;
+   // @Column(name = "day_number")
+   // private Integer dayNumber;
 
     @Column(name = "time")
     private Time time;
@@ -28,7 +28,13 @@ public class Reminder {
     @EqualsAndHashCode.Include
     private int userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
+    @ToString.Exclude
+    private User user; */
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonIgnore
     @ToString.Exclude

@@ -1,4 +1,4 @@
-package bot.services.handlers.working.delete;
+package bot.services.handlers.workingWithAttach.delete;
 
 import bot.annotations.Processing;
 import bot.entities.Attachment;
@@ -11,7 +11,6 @@ import bot.services.vkClient.VkMessage;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

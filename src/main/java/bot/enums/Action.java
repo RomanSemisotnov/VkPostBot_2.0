@@ -22,6 +22,10 @@ public enum Action {
     START_EDIT_TOPIC, FINISH_EDIT_TOPIC,
     START_DELETE_TOPIC, FINISH_DELETE_TOPIC,
 
+    //third actions chain
+    START_EDIT_REMINDER_TIME("/время"),
+    FINISH_EDIT_REMINDER_TIME,
+
     //others
     SHOW_MENU("/меню"),
     ADD_TOPIC_BY_COMMAND("/добавить"),

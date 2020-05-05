@@ -23,6 +23,11 @@ public class ActionChainStorage {
     }
 
     @Bean
+    public ActionChain editReminderTimeChain(){
+        return new ActionChain(Action.START_EDIT_REMINDER_TIME, Action.FINISH_EDIT_REMINDER_TIME);
+    }
+
+    @Bean
     public ActionChain workingWithAttachmentChain(){
         return new ActionChain(Action.GET_TOPICS_BY_COMMAND, Action.SELECT_TOPIC_BY_INDEX);
     }

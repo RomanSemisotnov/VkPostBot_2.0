@@ -9,6 +9,6 @@ import java.sql.Time;
 @Repository
 public interface ReminderRepository extends JpaRepository<Reminder,Integer> {
 
-    public Reminder findByUserIdAndDayNumberAndTime(Integer userId, Integer dayNumber, Time time);
+  //  public Reminder findByUserIdAndDayNumberAndTime(Integer userId, Integer dayNumber, Time time);
 
 }

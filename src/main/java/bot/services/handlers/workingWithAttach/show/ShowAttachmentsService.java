@@ -1,4 +1,4 @@
-package bot.services.handlers.working.show;
+package bot.services.handlers.workingWithAttach.show;
 
 import bot.annotations.Processing;
 import bot.entities.Attachment;

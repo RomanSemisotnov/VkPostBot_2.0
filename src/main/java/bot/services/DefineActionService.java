@@ -24,6 +24,9 @@ public class DefineActionService {
     private Pattern getTopicCommandPattern;
 
     @Autowired
+    private Pattern getEditReminderPattern;
+
+    @Autowired
     private Pattern getMenuPattern;
 
     public Action define(MessageBody body, Action prevAction) {
@@ -40,6 +43,9 @@ public class DefineActionService {
 
             if(getMenuPattern.matcher(command).matches())
                 return Action.SHOW_MENU;
+
+            if(getEditReminderPattern.matcher(command).matches())
+                return Action.START_EDIT_REMINDER_TIME;
         }
 
         if (body.getPayload() != null && body.getPayload().containsKey("neededAction")) // we got message from keyboard

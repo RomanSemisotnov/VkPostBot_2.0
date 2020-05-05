@@ -27,9 +27,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics;
 
-    @ToString.Exclude
+  /*  @ToString.Exclude
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Reminder> reminders;
+    private List<Reminder> reminders;*/
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Reminder reminder;
 
     @Column(name = "last_message")
     private Long lastMessageSec;

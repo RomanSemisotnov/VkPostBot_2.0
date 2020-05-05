@@ -1,4 +1,4 @@
-package bot.services.handlers.working.edit;
+package bot.services.handlers.workingWithAttach.edit;
 
 import bot.annotations.Processing;
 import bot.entities.MessageBody;

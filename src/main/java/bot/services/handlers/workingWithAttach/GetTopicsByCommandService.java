@@ -1,4 +1,4 @@
-package bot.services.handlers.working;
+package bot.services.handlers.workingWithAttach;
 
 import bot.annotations.Processing;
 import bot.entities.MessageBody;

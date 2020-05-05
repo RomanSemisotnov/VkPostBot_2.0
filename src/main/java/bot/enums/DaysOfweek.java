@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Component
+//@Component
 public class DaysOfweek {
 
     @Getter

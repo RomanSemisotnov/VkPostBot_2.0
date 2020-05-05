@@ -25,6 +25,11 @@ public class PatterntsMatchConfig {
     }
 
     @Bean
+    public Pattern getEditReminderPattern() {
+        return Pattern.compile("^\\s*" + Action.START_EDIT_REMINDER_TIME.getCommand() + "\\s*$");
+    }
+
+    @Bean
     public Pattern anyCommandPattern() {
         String allCommands = "(";
         for (Action command : Action.values()) {
@@ -34,6 +39,11 @@ public class PatterntsMatchConfig {
         allCommands = allCommands.substring(0, allCommands.length() - 1);
         allCommands += ")";
         return Pattern.compile("^\\s*[" + allCommands + "]\\s*[\\S+\\s*]+$");
+    }
+
+    @Bean
+    public Pattern timePattern(){
+        return Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$");
     }
 
 }

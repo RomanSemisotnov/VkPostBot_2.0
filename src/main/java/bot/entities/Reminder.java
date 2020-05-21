@@ -22,6 +22,7 @@ public class Reminder {
    // private Integer dayNumber;
 
     @Column(name = "time")
+    @Basic
     private Time time;
 
     @Column(name = "user_id")

@@ -7,9 +7,10 @@ import bot.enums.Action;
 import bot.services.handlers.BaseHandler;
 import bot.services.vkClient.VkMessage;
 
+import static bot.services.common.ConvertTimeService.convertToHH_MM;
+
 @Processing(Action.START_EDIT_REMINDER_TIME)
 public class StartEditReminderTimeService extends BaseHandler {
-
 
 
 
@@ -19,12 +20,11 @@ public class StartEditReminderTimeService extends BaseHandler {
 
         vkSenderService.send(VkMessage.builder()
                 .vkId(user.getVkId())
-                .textMessage("Установленное время: " + user.getReminder().getTime() + ", введите новое время в формате ЧЧ:ММ")
+                .textMessage("Установленное время: " + convertToHH_MM(user.getReminder().getTime()) + ", введите новое время в формате ЧЧ:ММ")
                 .build());
 
         return true;
     }
-
 
 
 

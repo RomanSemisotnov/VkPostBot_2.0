@@ -10,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
-
-import static bot.services.common.ConvertTimeService.convertToHH_MM_SS;
 
 @Configuration
 public class TasksConfig {
@@ -37,7 +34,7 @@ public class TasksConfig {
         timer.scheduleAtFixedRate(reminderTask, 60*1000 - (currentSecond * 1000),60*1000);*/
 
 
-        Calendar calendar = Calendar.getInstance();
+     /*   Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Time(1589155960385L)); //12 MINUTE
         calendar.get(Calendar.SECOND);
         Time timeZeroSec = new Time(1589155960385L - calendar.get(Calendar.SECOND) * 1000);
@@ -49,7 +46,7 @@ public class TasksConfig {
                     .vkId(reminder.getUser().getVkId())
                     .textMessage("xuy")
                     .build());
-        }
+        }*/
     }
 
 

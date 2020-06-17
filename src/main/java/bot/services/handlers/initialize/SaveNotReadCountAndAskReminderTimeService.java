@@ -16,7 +16,6 @@ public class SaveNotReadCountAndAskReminderTimeService extends BaseHandler {
 
 
 
-
     @Override
     public boolean handle(MessageBody body, User user) {
         String notReadCount = body.getText().trim();

@@ -39,14 +39,14 @@ public class CallbackHandlerController {
     @PostMapping
     public String execute(@RequestBody VkCallbackRequest callback) throws Exception {
 
-   //     if(!vkConfig.getSecret().equals(callback.getSecret()))
-     //       throw new Exception("secret phrase is not correct");
+        if(!vkConfig.getSecret().equals(callback.getSecret()))
+            throw new Exception("secret phrase is not correct");
 
-       // if(callback.getType() == null )
-         //   throw new Exception("message must have a type");
+        if(callback.getType() == null )
+            throw new Exception("message must have a type");
 
-        //if(callback.getType().equals("message_new"))
-        //    mainMessageHandlerService.handle(callback.getObject());
+        if(callback.getType().equals("message_new"))
+            mainMessageHandlerService.handle(callback.getObject());
 
        return "01b9c4d9";
     }

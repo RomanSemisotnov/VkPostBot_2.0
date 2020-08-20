@@ -31,10 +31,10 @@ public class CallbackHandlerController {
     }
 
     @Autowired
-    private VkConfig vkConfig;
+    VkConfig vkConfig;
 
     @Autowired
-    private MainMessageHandlerService mainMessageHandlerService;
+    MainMessageHandlerService mainMessageHandlerService;
 
     @PostMapping
     public String execute(@RequestBody VkCallbackRequest callback) throws Exception {
@@ -48,7 +48,7 @@ public class CallbackHandlerController {
         if(callback.getType().equals("message_new"))
             mainMessageHandlerService.handle(callback.getObject());
 
-       return "01b9c4d9";
+       return "ok";
     }
 
 }

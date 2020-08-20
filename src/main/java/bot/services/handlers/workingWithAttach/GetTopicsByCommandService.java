@@ -25,7 +25,7 @@ public class GetTopicsByCommandService extends BaseHandler {
         if(topics.isEmpty()){
             vkSenderService.send(VkMessage.builder()
                     .vkId(user.getVkId())
-                    .textMessage("Созданные темы отсутствуют, чтобы создать топик, введите '" + Action.SHOW_MENU.getCommand() + " <Название темы>'")
+                    .textMessage("Созданные темы отсутствуют, чтобы создать тему, введите '" + Action.ADD_TOPIC_BY_COMMAND.getCommand() + " <Название темы>'")
                     .build());
             return false;
         }
